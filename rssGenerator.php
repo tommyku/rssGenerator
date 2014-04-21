@@ -5,7 +5,7 @@ class RssGenerator {
   private $_items = array();
 
   public function __construct($title=NULL,$link=NULL,$description=NULL,$pubDate=NULL,$lastBuildDate=NULL,$otherElements=array()) {
-	date_default_timezone_set("Asia/Hong_Kong");
+    date_default_timezone_set("Asia/Hong_Kong");
 
     // necessary elements
     $this->_channel["title"] = $title ? $this->escape($title) : "";
@@ -15,7 +15,7 @@ class RssGenerator {
     // special treatment for date
     $this->_channel["pubDate"] = $pubDate ? date(DATE_RSS,$pubDate) : date(DATE_RSS);
     $this->_channel["lastBuildDate"] = $lastBuildDate ? date(DATE_RSS,$lastBuildDate) : date(DATE_RSS);
-		
+	
     // other elements
     foreach ($otherElements as $tag => $value) {
       $this->_chennel[$tag] = $value;
@@ -53,9 +53,9 @@ EOT;
     foreach ($this->_items as $item) {
       $rss .= "    <item>".PHP_EOL;
       foreach ($item as $tag => $val) {
-	$rss .= "      <".$tag.">";
-	$rss .= $val;
-	$rss .= "</".$tag.">".PHP_EOL;
+    $rss .= "      <".$tag.">";
+    $rss .= $val;
+    $rss .= "</".$tag.">".PHP_EOL;
       }
       $rss .= "    </item>".PHP_EOL;
     }
@@ -70,14 +70,14 @@ EOT;
   public function publish() {
     ob_clean();
     header("Content-Type: text/xml; charset=utf-8"); 
-	echo $this->generate();
+    echo $this->generate();
   }
-	
+
   private function escape($str) {
     return str_replace(
-		       array("\"","'","<",">","&"),
-		       array("&quot;","&apos;","&lt;","&gt;","&amp;"),
-		       $str
-		       );
+      array("\"","'","<",">","&"),
+      array("&quot;","&apos;","&lt;","&gt;","&amp;"),
+      $str
+    );
   }
 };
